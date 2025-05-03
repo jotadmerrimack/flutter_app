@@ -44,16 +44,9 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
   void getImage() {
-
-   // final query = currentCar.replaceAll(' ', '+');
-   imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Lamborghini_Aventador_%282021%29_IMG_4846.jpg/640px-Lamborghini_Aventador_%282021%29_IMG_4846.jpg';
-    //print('Image URL: $imageUrl');
-
-    //final fallback = 'car';
-    //final query = currentCar.split(' ').first; // just brand name
-    //imageUrl = 'https://source.unsplash.com/600x400/?$query,$fallback';
-
-    notifyListeners();
+  final brand = currentCar.split(' ').first.toLowerCase();
+  imageUrl = 'lib/assests/images/$brand.jpg';
+  notifyListeners();
   }
 }
 
@@ -119,21 +112,21 @@ class MyHomePage extends StatelessWidget {
 
             SizedBox(height: 20),
 
-            if (appState.imageUrl.isNotEmpty)
-              Image.network(
-                appState.imageUrl,
-                width: 300,
-                height: 200,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Column(
-                    children: [
-                      Icon(Icons.error, size: 50),
-                      Text('Image failed to load'),
-                    ],
-                  );
-                },
-              ),
+          if (appState.imageUrl.isNotEmpty)
+            Image.asset(
+              appState.imageUrl,
+              width: 300,
+              height: 200,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Column(
+                  children: [
+                    Icon(Icons.error, size: 50),
+                    Text('Image not found'),
+                  ],
+                );
+              },
+            ),
           ],
         ),
       ),
